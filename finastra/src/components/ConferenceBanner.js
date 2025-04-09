@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./css/ConferenceBanner.css";
 import watchImg from "./images/watch.jpg"; 
 
 const ConferenceBanner = () => {
+  const bannerRef = useRef(null);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.2 } // Trigger when 20% of the element is visible
+    );
+    
+    if (bannerRef.current) {
+      observer.observe(bannerRef.current);
+    }
+    
+    return () => {
+      if (bannerRef.current) {
+        observer.unobserve(bannerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="conference-wrapper">
-      <div className="conference-container">
+      <div ref={bannerRef} className="conference-container fade-in">
         <div className="conference-image">
           <img
             src={watchImg} 

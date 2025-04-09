@@ -1,13 +1,13 @@
-import React from 'react';
-import './css/Agenda.css';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/Agenda.css';
+import { motion } from 'framer-motion';
 
 const agenda = [
     {
         time: '09:30 AM',
         tag: 'Registration',
         title: 'Registration & Welcome Coffee',
-        
     },
     {
         time: '10:00 AM',
@@ -72,35 +72,124 @@ Emad Shawky Habib Hanna, CDAO, Banque Misr`,
     },
 ];
 
-const Agenda = () => {
+const ModernAgenda = () => {
+    const [expanded, setExpanded] = useState(null);
+    const [currentTime, setCurrentTime] = useState('');
+    const [currentSection, setCurrentSection] = useState(null);
+    
+    // Simulate current time and highlight current section
+    useEffect(() => {
+        const updateCurrentTime = () => {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const formattedHours = hours % 12 || 12;
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedTime = `${formattedHours}:${minutes < 10 ? '0' + minutes : minutes} ${ampm}`;
+            setCurrentTime(formattedTime);
+
+            // Find current section based on event times (demo purposes)
+            // In a real app, you would compare with actual times
+            const times = agenda.map(item => item.time);
+            const currentIndex = Math.floor(Math.random() * agenda.length); // Simulating for demo
+            setCurrentSection(currentIndex);
+        };
+        
+        updateCurrentTime();
+        const interval = setInterval(updateCurrentTime, 60000);
+        
+        return () => clearInterval(interval);
+    }, []);
+
+    const toggleExpand = (index) => {
+        setExpanded(expanded === index ? null : index);
+    };
+
     return (
-        <div className="agenda-wrapper py-5">
+        <div className="modern-agenda-wrapper py-5">
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-3">
-                        <h2 className="agenda-heading">Agenda</h2>
-                    </div>
-                    <div className="col-lg-9">
-                        <div className="agenda-content p-4">
-                            {agenda.map((item, index) => (
-                                <div key={index} className="agenda-item pb-4">
-                                <div className="d-flex gap-3">
-                                  <div className="agenda-time fw-bold">{item.time}</div>
-                                  <div className="flex-grow-1">
-                                    <div className="agenda-title fw-semibold">{item.title}</div>
-                                    {item.tag && (
-                                      <span className="badge bg-primary rounded-pill mt-1 agenda-badge">
-                                        {item.tag}
-                                      </span>
-                                    )}
-                                    {item.speaker && (
-                                      <div className="agenda-speaker mt-1">{item.speaker}</div>
-                                    )}
-                                  </div>
+                    <div className="col-lg-4 mb-4 mb-lg-0">
+                        <div className="sticky-top pt-4">
+                            <motion.div 
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="agenda-sidebar p-4"
+                            >
+                                <h2 className="agenda-heading mb-4">Event Schedule</h2>
+                                <div className="current-time-display">
+                                    <div className="time-label">Current Time</div>
+                                    <div className="time-value">{currentTime}</div>
                                 </div>
-                                {index !== agenda.length - 1 && <hr className="agenda-divider mt-3" />}
-                              </div>
-                              
+                                <div className="progress-container mt-4">
+                                    <div className="progress-label">Event Progress</div>
+                                    <div className="progress" style={{ height: '12px' }}>
+                                        <div 
+                                            className="progress-bar progress-bar-striped progress-bar-animated" 
+                                            role="progressbar" 
+                                            style={{ width: `${(currentSection / agenda.length) * 100}%` }}
+                                            aria-valuenow={(currentSection / agenda.length) * 100} 
+                                            aria-valuemin="0" 
+                                            aria-valuemax="100"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
+                    <div className="col-lg-8">
+                        <div className="agenda-timeline">
+                            {agenda.map((item, index) => (
+                                <motion.div 
+                                    key={index}
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                                    className={`agenda-item-container ${currentSection === index ? 'current-session' : ''}`}
+                                >
+                                    <div 
+                                        className={`agenda-item ${expanded === index ? 'expanded' : ''}`}
+                                        onClick={() => toggleExpand(index)}
+                                    >
+                                        <div className="timeline-marker"></div>
+                                        <div className="agenda-time-badge">
+                                            {item.time}
+                                            {item.tag && (
+                                                <span className="badge bg-primary ms-2">{item.tag}</span>
+                                            )}
+                                            {currentSection === index && (
+                                                <span className="badge bg-danger ms-2 pulse-animation">Now</span>
+                                            )}
+                                        </div>
+                                        <div className="agenda-content-card">
+                                            <h3 className="agenda-title">{item.title}</h3>
+                                            {item.speaker && (
+                                                <motion.div 
+                                                    className="agenda-speaker mt-2"
+                                                    initial={{ opacity: 0, height: 0 }}
+                                                    animate={{ 
+                                                        opacity: expanded === index ? 1 : 0,
+                                                        height: expanded === index ? 'auto' : 0
+                                                    }}
+                                                    transition={{ duration: 0.3 }}
+                                                >
+                                                    <div className="speaker-icon">
+                                                        <i className="bi bi-person-circle"></i>
+                                                    </div>
+                                                    <div className="speaker-details">
+                                                        {item.speaker.split(';').map((speaker, i) => (
+                                                            <div key={i} className="speaker-name">{speaker.trim()}</div>
+                                                        ))}
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                            <div className="expand-indicator">
+                                                <i className={`bi ${expanded === index ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
                             ))}
                         </div>
                     </div>
@@ -110,4 +199,4 @@ const Agenda = () => {
     );
 };
 
-export default Agenda;
+export default ModernAgenda;

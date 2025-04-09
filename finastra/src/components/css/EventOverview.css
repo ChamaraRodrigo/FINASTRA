@@ -2,6 +2,12 @@
     background-color: #111;
     color: #fff;
     font-family: 'Segoe UI', sans-serif;
+    opacity: 0;
+    transition: opacity 1s ease, transform 0.8s ease;
+  }
+  .conference-container.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
   
   .event-heading {
@@ -15,4 +21,99 @@
     line-height: 1.8;
     margin-bottom: 1.5rem;
   }
+
+  /* Supplementary styles to be added to your existing CSS */
+
+/* Import Bootstrap Icons */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+
+/* Background colors */
+.bg-dark {
+  background-color: #0f0f1a !important;
+}
+
+.bg-dark-subtle {
+  background-color: rgba(124, 77, 255, 0.05) !important;
+}
+
+/* Text colors */
+.text-primary {
+  color: #7c4dff !important;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #d122e3, #7c4dff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Letter spacing utility */
+.letter-spacing-3 {
+  letter-spacing: 3px;
+}
+
+/* Font weights */
+.fw-500 {
+  font-weight: 500;
+}
+
+/* Image overlay */
+.bg-overlay {
+  background: linear-gradient(to top, rgba(15, 15, 26, 0.7), rgba(15, 15, 26, 0.2));
+}
+
+/* Gradient background for icons */
+.bg-gradient {
+  background: linear-gradient(135deg, #d122e3, #7c4dff);
+  width: 40px;
+  height: 40px;
+}
+
+/* Icon size in topic boxes */
+.topic-icon i {
+  font-size: 1.2rem;
+}
+
+/* Image hover effect */
+.image-hover-container img {
+  transition: transform 0.7s ease;
+}
+
+.image-hover-container:hover img {
+  transform: scale(1.05);
+}
+
+/* Custom button styles */
+.btn-primary {
+  background: linear-gradient(90deg, #d122e3, #7c4dff);
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(124, 77, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(124, 77, 255, 0.6);
+  background: linear-gradient(90deg, #c235d1, #8d66f9);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .display-4 {
+    font-size: calc(1.4rem + 1.5vw);
+  }
+}
+
+@media (max-width: 768px) {
+  .topic-icon {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .topic-icon i {
+    font-size: 1rem;
+  }
+}
   
