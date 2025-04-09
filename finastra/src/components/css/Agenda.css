@@ -1,0 +1,49 @@
+.agenda-wrapper {
+  background-color: #ffffff;
+}
+
+.agenda-heading {
+  font-size: 3rem;
+  font-weight: 400;
+  color: #a13db1;
+}
+
+.agenda-content {
+  background-color: #fdf9ff;
+  border-radius: 12px;
+}
+
+.agenda-time {
+  font-size: 1rem;
+  color: #212529;
+  width: 100px;
+  min-width: 100px;
+  text-align: left;
+  padding-top: 3px;
+}
+
+.agenda-title {
+  font-size: 1.1rem;
+  color: #212529;
+  line-height: 1.4;
+}
+
+.agenda-speaker {
+  font-size: 0.95rem;
+  color: #4c4c4c;
+  white-space: pre-line;
+  margin-top: 4px;
+}
+
+.agenda-divider {
+  border-top: 2px solid #e69af7;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.agenda-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3em 0.6em;
+  margin-top: 4px;
+}

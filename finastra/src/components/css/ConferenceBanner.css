@@ -1,0 +1,54 @@
+.conference-wrapper {
+    background-color: #121212;
+    padding: 3rem 1rem;
+  }
+  
+  .conference-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 2rem;
+    overflow: hidden;
+    background: linear-gradient(to right, #240046, #7209b7);
+  }
+  
+  @media (min-width: 768px) {
+    .conference-container {
+      flex-direction: row;
+    }
+  }
+  
+  .conference-image {
+    flex: 1;
+  }
+  
+  .conference-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .conference-text {
+    flex: 1;
+    color: white;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .conference-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+  
+  .conference-list {
+    font-size: 1.25rem;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .conference-list li {
+    margin-bottom: 1rem;
+  }
+  
